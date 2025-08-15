@@ -1,5 +1,15 @@
 # FlowChart Diagram Syntax
 
+## 1. Left-Right Simple FlowChart
+```mermaid
+flowchart LR
+    A[Hard edge] -->|Link text| B(Round edge)
+    B --> C{Decision}
+    C -->|One| D[Result one]
+    C -->|Two| E[Result two]
+```
+
+## 2. Top-Down Simple FlowChart
 ```mermaid
 ---
 title: Geospatial analysis and model development for specific degradation in South Korea using model tree data mining
