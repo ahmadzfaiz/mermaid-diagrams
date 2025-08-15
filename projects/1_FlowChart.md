@@ -67,3 +67,52 @@ flowchart TB
 Chart inspiration source:
 - [Geospatial analysis and model development for specific degradation in South Korea using model tree data mining](https://www.sciencedirect.com/science/article/pii/S0341816221000011)
 - [Source full resolution chart image](https://ars.els-cdn.com/content/image/1-s2.0-S0341816221000011-gr4.jpg)
+
+## 3. FlowChart with Styling
+```mermaid
+---
+title: Selecting a Geospatial Method - Sheet 1
+---
+flowchart TB
+    %% Define nodes
+    start((start))
+    optimization[Consider optimization questions to answer]
+    meet_req{Does the data set meet the min data req's}
+    add_sample[Consider additional sampling]
+    perform_analysis[Perform exploratory data analysis]
+    show_correlation{Does the variables show spatial correlation?}
+    nonspatial_stats[Consider using nonspatial statistical methods]
+    dense_sample{Is the variable densely sampled?}
+    simple_method[Consider using a simple method]
+    error_analysis{Do you want to do detailed error analysis}
+    complex_method[\Consider using a more complex method. Go to Sheet 2/]
+    advanced_method[\Consider using a more advanced method. Go to Sheet 3/]
+
+    %% Styling nodes
+    style start color:green
+    style optimization fill:blue
+    style meet_req fill:yellow,color:black
+    
+    %% Define class-based styling nodes
+    classDef process fill:blue
+    classDef decision fill:yellow,color:black
+    classDef next fill:green
+    
+    class add_sample,perform_analysis,nonspatial_stats,simple_method process
+    class show_correlation,dense_sample,error_analysis decision
+    class complex_method,advanced_method next
+
+    %% Define main workflow
+    start --> optimization --> meet_req
+    meet_req --N--> add_sample
+    meet_req --Y--> perform_analysis
+    perform_analysis --> show_correlation
+    show_correlation --N--> nonspatial_stats
+    dense_sample --N--> simple_method
+    show_correlation --Y--> dense_sample --Y--> error_analysis
+    error_analysis --N--> complex_method
+    error_analysis --Y--> advanced_method
+```
+Chart inspiration source:
+- [Flow Charts for Choosing Geospatial Methods](https://gro-1.itrcweb.org/flow-charts-for-choosing-geospatial-methods/)
+- [Source full resolution chart image](https://gro-1.itrcweb.org/wp-content/uploads/2016/10/gro_flow_chart_1of4_10_26_16.png)
