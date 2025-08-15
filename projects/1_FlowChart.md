@@ -24,11 +24,11 @@ flowchart TB
 
     flow_duration["**Flow duration curve**"]
 
-    sediment_estimation@{ shape: rect, label: "**Estimating Total Sediment discharge (MEP & SEMEP)**" }
+    sediment_estimation["**Estimating Total Sediment discharge (MEP & SEMEP)**"]
 
-    estimate_sd@{ shape: rect, label: "**Estimating Specific Degradation (SD) using FD-SRC**" }
+    estimate_sd["**Estimating Specific Degradation (SD) using FD-SRC**"]
 
-    decision_sd@{ shape: diamond, label: "**Are the result (SD) for 35 points reliable**" }
+    decision_sd{"**Are the result (SD) for 35 points reliable**"}
 
     decision_sd_no["**Do not use SD for calibaration**"]
 
@@ -45,20 +45,19 @@ flowchart TB
 
     compare_model["**Compare to the existing empirical models**"]
 
-    decision_result@{ shape: diamond, label: "**Are the result (SD) for 35 points reliable**" }
+    decision_result{"**Are the result (SD) for 35 points reliable**"}
 
     sugessting_model["**Suggesting developed model**"]
 
     %% Main diagram flow
-    data_collection --> flow_duration --> estimate_sd
-    data_collection --> sediment_estimation --> estimate_sd
+    data_collection --> flow_duration & sediment_estimation --> estimate_sd
 
     estimate_sd --> decision_sd
     decision_sd --N--> decision_sd_no
     decision_sd --Y--> developing_model
     
     data_collection_gis --> developing_model
-    data_collection_gis --> geospatial_analysis <--> compare_model
+    data_collection_gis --> geospatial_analysis --- compare_model
 
     developing_model --> decision_result
     decision_result --Y--> sugessting_model
