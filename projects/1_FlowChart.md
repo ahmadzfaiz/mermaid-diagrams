@@ -90,11 +90,11 @@ flowchart TB
     %% Styling nodes
     style start color:green
     style optimization fill:blue
-    style meet_req fill:yellow,color:black
+    style meet_req fill:orange,color:black
     
     %% Define class-based styling nodes
     classDef process fill:blue
-    classDef decision fill:yellow,color:black
+    classDef decision fill:orange,color:black
     classDef next fill:green
     
     class add_sample,perform_analysis,nonspatial_stats,simple_method process
@@ -115,3 +115,42 @@ flowchart TB
 Chart inspiration source:
 - [Flow Charts for Choosing Geospatial Methods](https://gro-1.itrcweb.org/flow-charts-for-choosing-geospatial-methods/)
 - [Source full resolution chart image](https://gro-1.itrcweb.org/wp-content/uploads/2016/10/gro_flow_chart_1of4_10_26_16.png)
+
+## 4. FlowChart with FontAwesome Icons
+```mermaid
+graph TD
+    %% Define nodes
+    from_sheet1[\From fa:fa-file-lines Sheet 1: Consider a more complex method/]
+    pred_error{fa:fa-xmark Do you need a prediction error estimate?}
+    splines_kernel[Consider using splines or kernel smoothing method]
+    second_correlated{fa:fa-pen-to-square Are there secondary correlated data available?}
+    non_parametric[Consider using a nonparametric method]
+    regression[Perform regression and examine residuals for spatial correlation]
+    regression_significant{fa:fa-globe Do the regression residual show significant spatial correlation}
+    parametric[Consider using a pramateric regression method]
+    verify[Verify model fit using cross-validation]
+
+    %% Define a class-based styling
+    classDef process fill:blue
+    classDef decision fill:orange,color:black
+    classDef next fill:green
+    
+    class splines_kernel,non_parametric,regression,parametric,verify process
+    class pred_error,second_correlated,regression_significant decision
+    class from_sheet1 next
+
+    %% Define main workflow
+    from_sheet1 --> pred_error
+    pred_error --N--> splines_kernel
+    pred_error --Y--> second_correlated
+    second_correlated --Y--> regression
+    second_correlated --N--> non_parametric
+    regression --> regression_significant
+    regression_significant --Y--> non_parametric --> verify
+    regression_significant --N--> parametric --> verify
+```
+
+Chart inspiration source:
+- [Flow Charts for Choosing Geospatial Methods](https://gro-1.itrcweb.org/flow-charts-for-choosing-geospatial-methods/)
+- [Source full resolution chart image](https://gro-1.itrcweb.org/wp-content/uploads/2016/10/gro_flow_chart_2of4_10_26_16-1.png)
+- [FontAwesome 6.7.2](https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css)
