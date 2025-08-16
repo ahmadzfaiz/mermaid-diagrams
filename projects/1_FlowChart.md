@@ -248,4 +248,80 @@ graph TD
 
 Chart inspiration source:
 - [Flow Charts for Choosing Geospatial Methods](https://gro-1.itrcweb.org/flow-charts-for-choosing-geospatial-methods/)
+- [Source full resolution chart image](https://gro-1.itrcweb.org/wp-content/uploads/2016/10/gro_flow_chart_4of4_10_26_16.png)
+
+## 6. FlowChart with Animation
+```mermaid
+graph TD
+    %% Define nodes
+    from_sheet3[\From Sheet 3: Consider using an advanced method/]
+    answer_quest{Can you answer your question osing only spatial mean and variance?}
+    cons_kriging[Consider Kriging]
+    cons_sim[Consider conditional simulation method that attempt to reconstruct intrinsic heteroginity, which are favorable for mapping probabilities, uncertainity and risk]
+    sim_points[If you are interested in simulating values at points, then]
+    sim_area[If you are interested in simulating values at a predefined area or volume, then]
+    est_points[If you are interested in estimating values at points, then]
+    est_area[If you are interested in estimating values at a predefined area or volume, then]
+    sample_avail1{Are secondary sampled data available to generatespatial simulation?}
+    sample_avail2{Are secondary sampled data available to generatespatial simulation?}
+    sample_avail3{Are secondary sampled data available to generatespatial simulation?}
+    sample_avail4{Are secondary sampled data available to generatespatial simulation?}
+    cons_sim_points[Consider point conditional simulation methods]
+    cons_cosim_points[Consider point conditional co-simulation methods]
+    cons_sim_blocks[Consider block conditional simulation methods]
+    cons_cosim_blocks[Consider block conditional co-simulation methods]
+    cons_kri_points[Consider point kriging methods]
+    cons_cokri_points[Consider point co-kriging methods]
+    cons_kri_blocks[Consider block kriging methods]
+    cons_cokri_blocks[Consider block co-kriging methods]
+
+    %% Define a class-based styling
+    classDef process fill:blue
+    classDef decision fill:orange,color:black
+    classDef next fill:green
+    classDef note fill:pink,color:black
+
+    class cons_kriging,cons_sim,sim_points,sim_area,est_points,est_area,cons_cosim_points,cons_sim_points,cons_sim_blocks,cons_cosim_blocks,cons_kri_points,cons_cokri_points,cons_kri_blocks,cons_cokri_blocks process
+    class answer_quest,sample_avail1,sample_avail2,sample_avail3,sample_avail4 decision
+    class from_sheet3 next
+
+    %% Define main workflow
+    from_sheet3 a1@--> answer_quest
+    answer_quest a2@--N--> cons_sim
+    answer_quest --Y--> cons_kriging
+    cons_sim --> sim_points
+    cons_sim ac1@--> sim_area
+    cons_kriging --> est_points & est_area
+
+    sim_points --> sample_avail1
+    sample_avail1 --N--> cons_sim_points
+    sample_avail1 --Y--> cons_cosim_points
+    
+    sim_area a3@--> sample_avail2
+    sample_avail2 a4@--N--> cons_sim_blocks
+    sample_avail2 --Y--> cons_cosim_blocks
+
+    est_points --> sample_avail3
+    sample_avail3 --N--> cons_kri_points
+    sample_avail3 --Y--> cons_cokri_points
+    
+    est_area --> sample_avail4
+    sample_avail4 --N--> cons_kri_blocks
+    sample_avail4 --Y--> cons_cokri_blocks
+    
+
+    %% Define animation setup
+    a1@{ animation: slow }
+    a2@{ animation: fast }
+    a3@{ animation: fast }
+    a4@{ animation: fast }
+
+    %% Class-based animation setup
+    classDef animate stroke-dasharray: 9,5,stroke-dashoffset: 900,animation: dash 25s linear infinite;
+    
+    class ac1 animate
+```
+
+Chart inspiration source:
+- [Flow Charts for Choosing Geospatial Methods](https://gro-1.itrcweb.org/flow-charts-for-choosing-geospatial-methods/)
 - [Source full resolution chart image](https://gro-1.itrcweb.org/wp-content/uploads/2016/10/gro_flow_chart_3of4_10_26_16-1.png)
