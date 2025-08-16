@@ -324,4 +324,4 @@ graph TD
 
 Chart inspiration source:
 - [Flow Charts for Choosing Geospatial Methods](https://gro-1.itrcweb.org/flow-charts-for-choosing-geospatial-methods/)
-- [Source full resolution chart image](https://gro-1.itrcweb.org/wp-content/uploads/2016/10/gro_flow_chart_3of4_10_26_16-1.png)
+- [Source full resolution chart image](https://gro-1.itrcweb.org/wp-content/uploads/2016/10/gro_flow_chart_4of4_10_26_16.png)
