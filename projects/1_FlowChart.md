@@ -154,3 +154,98 @@ Chart inspiration source:
 - [Flow Charts for Choosing Geospatial Methods](https://gro-1.itrcweb.org/flow-charts-for-choosing-geospatial-methods/)
 - [Source full resolution chart image](https://gro-1.itrcweb.org/wp-content/uploads/2016/10/gro_flow_chart_2of4_10_26_16-1.png)
 - [FontAwesome 6.7.2](https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css)
+
+## 5. FlowChart with SubGraph
+```mermaid
+graph TD
+    %% Define nodes
+    from_sheet1[\From fa:fa-file-lines Sheet 1: Consider a more advanced method/]
+    normal_dist{Are data normally distributed with no outliers?}
+    transform[Transform the data and/or remove outliers]
+    second_order{Do the data meet second-order or intrinsic stationary?}
+    success{successful?}
+    sheet2[Go to sheet 2]
+    spatial_trend{Are spatial trends of interest?}
+    detrending[Conduct data detrending]
+    success2{successful?}
+    second_correlated{Are there secondary correlated data available?}
+    correlogram[Construct the correlogram, or variogram]
+    cross_correlogram[Construct the cross-correlogram, or cross-variogram]
+    anisotrophy{Does the data exibit anisotrophy?}
+    crossval_stats{Do cross-validation statistics support the fitted model?}
+    revisit[Revisit experimental variography or consider simple or more complex methods. Return to sheet 1]
+    optimize_sample{Do you want to optimize sampling design?}
+    use_result[Use the result of correlograms and variography results]
+    to_sheet4[\Consider using an advanced method. Go to Sheet 4/]
+
+    %% Define subgraph
+    subgraph DataDistribution
+        examine_dist[Examine data distribution and outliers.]
+        note_examine_dist[Note: Data should be standardized to perform conditional simulation and factorial kriging.]
+        examine_dist -.- note_examine_dist
+    end
+
+    subgraph Kriging
+        universal_kriging["Consider using: universal kriging, or kriging with external drift (KED)"]
+        note_kriging[Both methods, krige the trend and spatial correlation components simultaneously. KED also uses secondary data. You must still construck a correlogram or variogram for these method]
+        
+        universal_kriging -.- note_kriging
+    end
+
+    subgraph Variography
+        variography_omnidir[Use variogram fitting with omnidirectional variography]
+        variography_dir[Use variogram fitting with directional variography]
+        note_variography["`
+            **Note: Variography**
+            - Often several models are tested
+            - mean error and mean standardized error are close to zero
+            - Variance error and variance of standardized error are close to 1
+            - Rho value between predicted fits is close to the bisector
+            - Residuals are uncorrelated
+        `"]
+
+        variography_omnidir -.- note_variography
+        variography_dir -.- note_variography
+    end
+
+    %% Define a class-based styling
+    classDef process fill:blue
+    classDef decision fill:orange,color:black
+    classDef next fill:green
+    classDef note fill:pink,color:black
+
+    class examine_dist,transform,detrending,universal_kriging,correlogram,cross_correlogram,variography_dir,variography_omnidir,use_result process
+    class normal_dist,success,second_order,spatial_trend,success2,second_correlated,anisotrophy,crossval_stats,optimize_sample decision
+    class from_sheet1,sheet2,revisit,to_sheet4 next
+    class note_examine_dist,note_kriging,note_variography note
+
+    %% Define main workflow
+    from_sheet1 --> DataDistribution --> normal_dist
+    normal_dist --Y--> second_order
+    normal_dist --N--> transform
+    transform --> success
+    success --Y--> second_order
+    success --N--> sheet2
+    second_order --Y--> spatial_trend
+    spatial_trend --N--> detrending
+    spatial_trend --Y--> Kriging
+    detrending --> success2
+    success2 --N--> Kriging
+    second_order --Y--> second_correlated
+    success2 --Y--> second_correlated
+    second_correlated --N--> correlogram
+    second_correlated --Y--> cross_correlogram
+    correlogram --> anisotrophy
+    cross_correlogram --> anisotrophy
+    anisotrophy --N--> variography_omnidir
+    anisotrophy --Y--> variography_dir
+    Variography --> crossval_stats
+    crossval_stats --N--> revisit
+    crossval_stats --Y--> optimize_sample
+    optimize_sample --Y--> use_result
+    optimize_sample --N--> to_sheet4
+```
+
+Chart inspiration source:
+- [Flow Charts for Choosing Geospatial Methods](https://gro-1.itrcweb.org/flow-charts-for-choosing-geospatial-methods/)
+- [Source full resolution chart image](https://gro-1.itrcweb.org/wp-content/uploads/2016/10/gro_flow_chart_3of4_10_26_16-1.png)
