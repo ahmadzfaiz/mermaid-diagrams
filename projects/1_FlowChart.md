@@ -325,3 +325,33 @@ graph TD
 Chart inspiration source:
 - [Flow Charts for Choosing Geospatial Methods](https://gro-1.itrcweb.org/flow-charts-for-choosing-geospatial-methods/)
 - [Source full resolution chart image](https://gro-1.itrcweb.org/wp-content/uploads/2016/10/gro_flow_chart_4of4_10_26_16.png)
+
+## 7. Clickable FlowChart
+```mermaid
+graph
+    %% Styling
+    classDef pink fill:pink,color:black
+    classDef aqua fill:aqua,color:black
+    classDef orange fill:orange,color:black
+    classDef yellow fill:yellow,color:black
+
+    %% Main flow
+    S((Start)):::pink --> Pn[/Power on/]:::aqua
+    Pn ==> C{Coffe selected}:::orange
+    C -->|Mocha| Ch(Add chocolate powder):::yellow
+    Ch --> M(Add frothed milk):::yellow
+    C -->|Latte| M
+    M --> Hc(Add hot coffee):::yellow
+    C -->|Espresso| Hc
+    Hc --> Pp{Power pressed}:::orange
+    Pp ==> Pf[/Power off/]:::aqua
+    Pf --> E((End)):::pink
+
+    %% Clickable Links %%
+    click C "https://en.wikipedia.org/wiki/Coffee"
+    click Ch "https://en.wikipedia.org/wiki/Chocolate"
+    click M "https://en.wikipedia.org/wiki/Milk"
+```
+
+Chart inspiration source:
+- [Source full resolution chart image](https://templates.visual-paradigm.com/repository/images/0520d0d1-1b15-4453-911f-06631ca98bf6/flowchart-design/simple-coffee-machine.png)
